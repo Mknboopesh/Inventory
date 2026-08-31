@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: inventory-management-system
+    runtime: python
+    plan: free
+    buildCommand: pip install -r backend/requirements.txt && npm --prefix frontend install && npm --prefix frontend run build
+    startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: MONGO_URI
+        sync: false
+      - key: MONGO_DB
+        value: inventory_management
+      - key: DOCUMENTS_DIR
+        value: /var/data/generated-documents
+    disk:
+      name: inventory-data
+      mountPath: /var/data
+      sizeGB: 1

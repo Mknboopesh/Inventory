@@ -1,0 +1,9 @@
+services:
+  app:
+    environment:
+      MONGO_URI: ${MONGO_URI}
+      MONGO_DB: ${MONGO_DB:-inventory_management}
+      DOCUMENTS_DIR: /app/generated-documents
+      CORS_ORIGINS: http://localhost:8000,http://127.0.0.1:8000
+      SESSION_HOURS: ${SESSION_HOURS:-12}
+    depends_on: []

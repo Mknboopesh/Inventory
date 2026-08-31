@@ -1,0 +1,27 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# Node
+node_modules/
+frontend/node_modules/
+
+# Environment
+.env
+
+# MongoDB installation
+mongodb-win32-x86_64-windows-7.0.14/
+
+# MongoDB database files
+data/mongo-db/
+
+# Generated documents
+generated-documents/
+
+# Build files
+dist/
+build/
+
+# Logs
+*.log

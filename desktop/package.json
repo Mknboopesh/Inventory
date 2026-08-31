@@ -1,0 +1,61 @@
+{
+  "name": "inventory-desktop",
+  "version": "1.0.0",
+  "description": "Desktop wrapper for the Inventory Management System.",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^31.7.7",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.inventory.management",
+    "productName": "Inventory Management",
+    "directories": {
+      "output": "../desktop-dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../backend",
+        "to": "backend"
+      },
+      {
+        "from": "../frontend/dist",
+        "to": "frontend/dist"
+      },
+      {
+        "from": "../data/database.json",
+        "to": "data/database.json"
+      },
+      {
+        "from": "../venv",
+        "to": "venv"
+      },
+      {
+        "from": "../mongodb-win32-x86_64-windows-7.0.14",
+        "to": "mongodb-win32-x86_64-windows-7.0.14"
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  },
+  "dependencies": {
+    "inventory-management-system": "file:.."
+  }
+}

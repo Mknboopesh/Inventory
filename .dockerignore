@@ -1,0 +1,13 @@
+**/node_modules
+**/npm-debug.log
+.git
+.gitignore
+*.local
+venv
+mongodb-win32-x86_64-windows-7.0.14
+data/mongo-db
+data/mongod.log
+frontend/dist
+__pycache__
+**/__pycache__
+*.pyc

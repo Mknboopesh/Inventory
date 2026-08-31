@@ -1,0 +1,38 @@
+services:
+  mongo:
+    image: mongo:7.0
+    container_name: inventory-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: inventory-app
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017
+      MONGO_DB: inventory_management
+      DOCUMENTS_DIR: /app/generated-documents
+      CORS_ORIGINS: http://localhost:8000,http://127.0.0.1:8000
+      SESSION_HOURS: "12"
+    volumes:
+      - ./generated-documents:/app/generated-documents
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+volumes:
+  mongo-data:
