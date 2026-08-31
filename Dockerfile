@@ -9,8 +9,8 @@ FROM python:3.13-slim
 WORKDIR /app
 COPY backend/requirements.txt ./backend/requirements.txt
 RUN pip install --no-cache-dir -r backend/requirements.txt
-COPY backend ./backend
-COPY generated-documents ./generated-documents
+COPY frontend /app/frontend
+COPY backend /app/backend
 COPY data ./data
 COPY --from=frontend /app/frontend/dist ./frontend/dist
 
