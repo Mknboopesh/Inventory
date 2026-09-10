@@ -94,7 +94,7 @@ h1, h2, h3, p { margin: 0; }
 .sidebar h1 { font-size: 1.32rem; line-height: 1.25; }
 .sidebar nav { display: grid; gap: 6px; }
 .sidebar nav button { display: grid; grid-template-columns: 34px minmax(0, 1fr); align-items: center; gap: 10px; min-height: 43px; border-radius: 7px; background: transparent; color: var(--muted); text-align: left; padding: 0 10px; font-weight: 850; transition: background .14s ease, color .14s ease, transform .14s ease; }
-.sidebar nav button span { display: inline-flex; width: 28px; height: 28px; align-items: center; justify-content: center; border-radius: 6px; background: #eef5ff; color: var(--brand); font-size: .72rem; font-weight: 950; }
+.sidebar nav button span { display: inline-flex; width: 28px; height: 28px; align-items: center; justify-content: center; border-radius: 6px; background: #eef5ff; color: var(--brand); font-size: 1.2rem; font-weight: 950; }
 .sidebar nav button:hover { background: #f8fbff; color: var(--ink); transform: translateX(2px); }
 .sidebar nav button.active { background: linear-gradient(90deg, #eef5ff, #f7fbff); color: var(--brand); box-shadow: inset 3px 0 0 var(--brand); }
 .sidebar nav button.active span { background: var(--brand); color: #fff; }

@@ -4,16 +4,17 @@ const API_BASE = import.meta.env.VITE_API_BASE || (import.meta.env.DEV ? "http:/
 const sessionKey = "inventory-session-token";
 
 const nav = [
-  ["erp", "ERP", "ER"],
-  ["ai-advisor", "AI Advisor", "AI"],
-  ["dashboard", "GRN", "GR"],
-  ["invoices", "Invoices", "IV"],
-  ["process", "Process", "PR"],
-  ["machining", "Machining", "MC"],
-  ["cnc-machines", "CNC Machines", "CN"],
-  ["salary", "Salary", "SA"],
-  ["workers", "Workers", "WK"],
-  ["profile", "Profile", "PF"]
+  ["home", "Home Guide", "🏠"],
+  ["dashboard", "Add Material (GRN)", "📦"],
+  ["process", "Check Material", "⚙️"],
+  ["machining", "Machine Work", "🔧"],
+  ["cnc-machines", "CNC Machines", "💻"],
+  ["invoices", "Documents", "📄"],
+  ["erp", "Business (ERP)", "📊"],
+  ["ai-advisor", "Smart Helper", "🤖"],
+  ["salary", "Pay Workers", "💰"],
+  ["workers", "Manage Staff", "👷"],
+  ["profile", "My Account", "👤"]
 ];
 
 const emptyAuth = { companyName: "", address: "", name: "", phone: "", email: "", password: "", role: "manager", identity: "" };
@@ -119,7 +120,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [authTab, setAuthTab] = useState("login");
   const [auth, setAuth] = useState(emptyAuth);
-  const [view, setView] = useState("dashboard");
+  const [view, setView] = useState("home");
   const [message, setMessage] = useState("");
   const [dashboard, setDashboard] = useState(null);
   const [erp, setErp] = useState(null);
@@ -235,13 +236,13 @@ function AuthScreen({ auth, setAuth, authTab, setAuthTab, submit, message }) {
   return (
     <main className="hero">
       <section>
-        <p className="eyebrow">React + Python + MongoDB</p>
-        <h1>ERP Management System</h1>
-        <p>Register your company, manage sales, procurement, GRN material, production, invoices, finance, HR, reports, and AI order suggestions.</p>
+        <p className="eyebrow">Simple & Easy Factory App</p>
+        <h1>Factory & Inventory System</h1>
+        <p>Manage your materials, workers, machines, and bills easily. Built for everyone to understand.</p>
         <div className="hero-metrics">
-          <div className="metric"><strong>GRN</strong><span>Inward material entry</span></div>
-          <div className="metric"><strong>QC</strong><span>Production workflow</span></div>
-          <div className="metric"><strong>DC</strong><span>Invoice documents</span></div>
+          <div className="metric"><strong>📦 Material</strong><span>Add incoming stock</span></div>
+          <div className="metric"><strong>⚙️ Work</strong><span>Track production</span></div>
+          <div className="metric"><strong>📄 Bills</strong><span>Generate invoices</span></div>
         </div>
       </section>
       <section className="auth-panel">
@@ -268,6 +269,7 @@ function AuthScreen({ auth, setAuth, authTab, setAuthTab, submit, message }) {
 }
 
 function View(props) {
+  if (props.view === "home") return <HomeGuide {...props} />;
   if (props.view === "profile") return <Profile user={props.currentUser} />;
   if (props.view === "erp") return <ErpMenu {...props} />;
   if (props.view === "ai-advisor") return <AiAdvisor {...props} />;
@@ -1324,6 +1326,85 @@ function salesFields() {
 
 function expenseFields() {
   return [["expenseDate", "Expense date", "date"], ["category", "Category"], ["description", "Description"], ["amount", "Amount", "number"], ["paidBy", "Paid by"]];
+}
+
+function HomeGuide({ setView, dashboard }) {
+  const steps = [
+    {
+      id: "dashboard",
+      icon: "📦",
+      title: "1. Add Material (GRN)",
+      desc: "When new raw material comes in, enter its details and heat numbers here."
+    },
+    {
+      id: "process",
+      icon: "⚙️",
+      title: "2. Check Material",
+      desc: "Accept (OK) or Reject material before it goes to the machines."
+    },
+    {
+      id: "machining",
+      icon: "🔧",
+      title: "3. Machine Work",
+      desc: "Assign items to CNC machines, then complete machining when done."
+    },
+    {
+      id: "invoices",
+      icon: "📄",
+      title: "4. Documents",
+      desc: "Find all bills, invoices, and reports generated automatically."
+    }
+  ];
+
+  const tools = [
+    { id: "erp", icon: "📊", title: "Business (ERP)", desc: "Sales, expenses, and overall business reports." },
+    { id: "ai-advisor", icon: "🤖", title: "Smart Helper", desc: "Ask questions, get voice guidance, and profit suggestions." },
+    { id: "salary", icon: "💰", title: "Pay Workers", desc: "Calculate and save daily wages based on hours worked." },
+    { id: "workers", icon: "👷", title: "Manage Staff", desc: "Approve or remove managers and employees." }
+  ];
+
+  return (
+    <div style={{ padding: "1rem", maxWidth: "900px", margin: "0 auto" }}>
+      <section className="command-center" style={{ marginBottom: "2rem", background: "#f8fafc", padding: "2rem", borderRadius: "12px", border: "1px solid #e2e8f0", textAlign: "center" }}>
+        <h1 style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>👋 Welcome to {dashboard?.company?.name || "Inventory"} App</h1>
+        <p style={{ fontSize: "1.1rem", color: "#64748b" }}>Choose a step below to start your work. This app helps you track everything easily.</p>
+      </section>
+
+      <h2 style={{ fontSize: "1.5rem", marginBottom: "1rem", color: "#334155" }}>🏭 Factory Work Steps</h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem", marginBottom: "3rem" }}>
+        {steps.map(step => (
+          <button
+            key={step.id}
+            onClick={() => setView?.(step.id)}
+            style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "1.5rem", background: "#ffffff", border: "2px solid #e2e8f0", borderRadius: "12px", cursor: "pointer", transition: "0.2s", boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)" }}
+            onMouseOver={e => e.currentTarget.style.borderColor = "#3b82f6"}
+            onMouseOut={e => e.currentTarget.style.borderColor = "#e2e8f0"}
+          >
+            <span style={{ fontSize: "3rem", marginBottom: "0.5rem" }}>{step.icon}</span>
+            <strong style={{ fontSize: "1.2rem", marginBottom: "0.5rem", color: "#0f172a" }}>{step.title}</strong>
+            <span style={{ fontSize: "0.95rem", color: "#64748b" }}>{step.desc}</span>
+          </button>
+        ))}
+      </div>
+
+      <h2 style={{ fontSize: "1.5rem", marginBottom: "1rem", color: "#334155" }}>🛠️ Other Tools</h2>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1rem" }}>
+        {tools.map(tool => (
+          <button
+            key={tool.id}
+            onClick={() => setView?.(tool.id)}
+            style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "1.5rem", background: "#ffffff", border: "1px solid #e2e8f0", borderRadius: "12px", cursor: "pointer", transition: "0.2s" }}
+            onMouseOver={e => e.currentTarget.style.borderColor = "#64748b"}
+            onMouseOut={e => e.currentTarget.style.borderColor = "#e2e8f0"}
+          >
+            <span style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>{tool.icon}</span>
+            <strong style={{ fontSize: "1.1rem", marginBottom: "0.5rem", color: "#0f172a" }}>{tool.title}</strong>
+            <span style={{ fontSize: "0.9rem", color: "#64748b" }}>{tool.desc}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default App;
